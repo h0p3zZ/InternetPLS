@@ -1,7 +1,11 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"net/http"
+)
 
 func main() {
 	fmt.Printf("hello, world\n")
+	fmt.Print(http.Get("https://google.com"))
 }
