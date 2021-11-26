@@ -20,3 +20,7 @@ golang.org/x/term v0.0.0-20210927222741-03fcf44c2211/go.mod h1:jbD1KX2456YbFQfuX
 golang.org/x/text v0.3.3/go.mod h1:5Zoc/QRtKVWzQhOtBMvqHzDpF6irO9z98xDceosuGiQ=
 golang.org/x/text v0.3.6/go.mod h1:5Zoc/QRtKVWzQhOtBMvqHzDpF6irO9z98xDceosuGiQ=
 golang.org/x/tools v0.0.0-20180917221912-90fa682c2a6e/go.mod h1:n7NCudcB/nEzxVGmLbDWY5pfWTLqBcC2KZ6jyYvM4mQ=
+golang.zx2c4.com/go118/netip v0.0.0-20211106132939-9d41d90554dd h1:gUHae7sCd+tFJLcCximWeBFD2b6Jg3O7UaNaPvjIJHc=
+golang.zx2c4.com/go118/netip v0.0.0-20211106132939-9d41d90554dd/go.mod h1:5yyfuiqVIJ7t+3MqrpTQ+QqRkMWiESiyDvPNvKYCecg=
+golang.zx2c4.com/wireguard/windows v0.5.2 h1:C3kUahG6QPhXUYSMesW0t1mDo1XCwls2c8Bz16umS44=
+golang.zx2c4.com/wireguard/windows v0.5.2/go.mod h1:KptYG5fXTsP1sHafw0BnWHxobtR6QZHWY6SVWq5R0PM=

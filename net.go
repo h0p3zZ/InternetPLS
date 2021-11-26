@@ -9,6 +9,8 @@ import (
 	"time"
 
 	"github.com/go-ping/ping"
+
+	"golang.zx2c4.com/wireguard/windows/tunnel/winipcfg"
 )
 
 type postObject struct {
@@ -16,6 +18,8 @@ type postObject struct {
 	AuthPass string `json:"auth_pass"`
 	Accept   string `json:"accpe"`
 }
+
+const url = "http://10.10.0.251:8002/?zone=cp_htl"
 
 func runPing(host string) (rtt time.Duration, pktLoss float64) {
 	pinger, pingerErr := ping.NewPinger(host)
@@ -36,6 +40,11 @@ func runPing(host string) (rtt time.Duration, pktLoss float64) {
 }
 
 func connect(userInfo user) {
+	addrs, _ := winipcfg.GetAdaptersAddresses(winipcfg.AddressFamily(2), winipcfg.GAAFlagIncludeAll)
+	for _, addr := range addrs {
+		fmt.Println(addr.DNSSuffix())
+	}
+
 	b, err := json.Marshal(&postObject{userInfo.Username, userInfo.Password, "Anemlden"})
 	if err != nil {
 		return

@@ -4,10 +4,13 @@ import (
 	"fmt"
 )
 
-const url = "http://10.10.0.251:8002/?zone=cp_htl"
+// find network interface with dns suffic htl.grieskirchen.local
+// create socket connection via this interace to the login-url
 
 func main() {
+
 	userInfo := readUserfile()
+	connect(userInfo)
 
 	for {
 		rtt, pktLoss := runPing("www.google.com")
