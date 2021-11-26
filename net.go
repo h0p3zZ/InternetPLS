@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
+	"net"
 	"net/http"
 	"time"
 
@@ -40,16 +41,42 @@ func runPing(host string) (rtt time.Duration, pktLoss float64) {
 }
 
 func connect(userInfo user) {
+	var localAddress net.Addr
 	addrs, _ := winipcfg.GetAdaptersAddresses(winipcfg.AddressFamily(2), winipcfg.GAAFlagIncludeAll)
 	for _, addr := range addrs {
+		if addr.DNSSuffix() == "htl.grieskirchen.local" {
+			ifaces, _ := net.Interfaces()
+			for _, i := range ifaces {
+				if addr.IfIndex == uint32(i.Index) {
+					localAddr, _ := i.Addrs()
+					localAddress = localAddr[0]
+				}
+			}
+		}
 		fmt.Println(addr.DNSSuffix())
 	}
 
-	b, err := json.Marshal(&postObject{userInfo.Username, userInfo.Password, "Anemlden"})
+	if localAddress == nil {
+		panic("Could not find interface with DNS suffix htl.grieskirchen.local")
+	}
+
+	transport := &http.Transport{
+		Proxy: http.ProxyFromEnvironment,
+		Dial: (&net.Dialer{
+			Timeout:   30 * time.Second,
+			KeepAlive: 30 * time.Second,
+			LocalAddr: localAddress,
+		}).Dial, TLSHandshakeTimeout: 10 * time.Second}
+
+	client := &http.Client{
+		Transport: transport,
+	}
+
+	b, err := json.Marshal(&postObject{userInfo.Username, userInfo.Password, "Anmelden"})
 	if err != nil {
 		return
 	}
-	response, postErr := http.Post(url, "application/JSON", bytes.NewBuffer(b))
+	response, postErr := client.Post(url, "application/JSON", bytes.NewBuffer(b))
 	if postErr != nil {
 		fmt.Println(postErr)
 	}

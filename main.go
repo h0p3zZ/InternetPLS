@@ -8,7 +8,6 @@ import (
 // create socket connection via this interace to the login-url
 
 func main() {
-
 	userInfo := readUserfile()
 	connect(userInfo)
 
