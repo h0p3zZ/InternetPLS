@@ -50,6 +50,4 @@ func connect(userInfo user) {
 		fmt.Println("Logged in!")
 		return
 	}
-
-	readUser()
 }
