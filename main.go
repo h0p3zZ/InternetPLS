@@ -10,7 +10,7 @@ func main() {
 	userInfo := readUserfile()
 
 	for {
-		rtt, pktLoss := pingRun("www.google.com")
+		rtt, pktLoss := runPing("www.google.com")
 
 		if pktLoss == float64(1) {
 			fmt.Println("Connection lost. Reconnecting...")

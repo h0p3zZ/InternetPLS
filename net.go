@@ -17,7 +17,7 @@ type postObject struct {
 	Accept   string `json:"accpe"`
 }
 
-func pingRun(host string) (rtt time.Duration, pktLoss float64) {
+func runPing(host string) (rtt time.Duration, pktLoss float64) {
 	pinger, pingerErr := ping.NewPinger(host)
 	if pingerErr != nil {
 		fmt.Println(pingerErr)

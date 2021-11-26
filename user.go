@@ -27,7 +27,6 @@ func readUserfile() user {
 		} else {
 			decodedPw, _ := b64.StdEncoding.DecodeString(readUser.Password)
 			readUser.Password = string(decodedPw)
-			fmt.Println(readUser.Password)
 			return readUser
 		}
 	}
