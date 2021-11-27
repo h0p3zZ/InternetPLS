@@ -9,14 +9,14 @@ import (
 
 func main() {
 	userInfo := readUserfile()
-	connect(userInfo)
+	connect(&userInfo)
 
 	for {
 		rtt, pktLoss := runPing("www.google.com")
 
 		if pktLoss == float64(1) {
 			fmt.Println("Connection lost. Reconnecting...")
-			connect(userInfo)
+			connect(&userInfo)
 		} else {
 			fmt.Printf("RTT: %v\n", rtt)
 		}

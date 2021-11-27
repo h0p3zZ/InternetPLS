@@ -17,7 +17,7 @@ import (
 type postObject struct {
 	AuthUser string `json:"auth_user"`
 	AuthPass string `json:"auth_pass"`
-	Accept   string `json:"accpe"`
+	Accept   string `json:"accept"`
 }
 
 const url = "http://10.10.0.251:8002/?zone=cp_htl"
@@ -40,7 +40,7 @@ func runPing(host string) (rtt time.Duration, pktLoss float64) {
 	return stats.AvgRtt, stats.PacketLoss
 }
 
-func connect(userInfo user) {
+func connect(userInfo *user) {
 	var localAddress net.Addr
 	addrs, _ := winipcfg.GetAdaptersAddresses(winipcfg.AddressFamily(2), winipcfg.GAAFlagIncludeAll)
 	for _, addr := range addrs {
