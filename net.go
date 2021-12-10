@@ -10,8 +10,6 @@ import (
 	"time"
 
 	"github.com/go-ping/ping"
-
-	"golang.zx2c4.com/wireguard/windows/tunnel/winipcfg"
 )
 
 type postObject struct {
@@ -41,20 +39,7 @@ func runPing(host string) (rtt time.Duration, pktLoss float64) {
 }
 
 func connect(userInfo *user) {
-	var localAddress net.Addr
-	addrs, _ := winipcfg.GetAdaptersAddresses(winipcfg.AddressFamily(2), winipcfg.GAAFlagIncludeAll)
-	for _, addr := range addrs {
-		if addr.DNSSuffix() == "htl.grieskirchen.local" {
-			ifaces, _ := net.Interfaces()
-			for _, i := range ifaces {
-				if addr.IfIndex == uint32(i.Index) {
-					localAddr, _ := i.Addrs()
-					localAddress = localAddr[0]
-				}
-			}
-		}
-		fmt.Println(addr.DNSSuffix())
-	}
+	localAddress := getDialInterfaceAddress()
 
 	if localAddress == nil {
 		panic("Could not find interface with DNS suffix htl.grieskirchen.local")
